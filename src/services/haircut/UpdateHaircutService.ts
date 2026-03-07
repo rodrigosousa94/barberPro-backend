@@ -1,26 +1,27 @@
 import prismaClient from "../../prisma";
 
 interface HaircutModel {
-    id: string;
+    userId: string;
+    haircutId: string;
     name: string;
     price: number;
+    status: boolean | string;
 }
 
 class UpdateHaircutService {
-    async execute({ haircutId, name, price }){
+    async execute({ userId, haircutId, name, price, status = true }){
         try{
-            if(!name || !price){
-                throw new Error("Name and price is required!");
-            }
-            
-            const hairlreadyExists = await prismaClient.haircut.findFirst({
+            const user = await prismaClient.user.findFirst({
                 where: {
-                    id: haircutId
+                    id: userId
+                },
+                include: {
+                    subscriptions: true,
                 }
-            });
+            })
 
-            if(!hairlreadyExists){
-                throw new Error("haircut does not exists")
+            if(user?.subscriptions?.status !== "active") {
+                throw new Error("Not authorized")
             }
 
             const haircutUpdated = await prismaClient.haircut.update({
@@ -28,15 +29,12 @@ class UpdateHaircutService {
                     id: haircutId
                 },
                 data: {
-                    name: name,
-                    price: price
-                },
-                select: {
-                    name: true,
-                    price: true
+                    name,
+                    price,
+                    status: status == true ? true : false
                 }
             })
-        
+
             return haircutUpdated
         }catch(err){
             console.log(err);

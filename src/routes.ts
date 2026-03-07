@@ -17,7 +17,7 @@ router.get('/me', isAuthenticated, new DetailUserController().handle)
 router.put('/users', isAuthenticated, new UpdateUserController().handle)
 
 //rotas de cortes de cabelo
-router.post('/haircuts', isAuthenticated, new CreateHaircutController().handle)
+router.post('/createHaircut', isAuthenticated, new CreateHaircutController().handle)
 router.get('/haircuts', isAuthenticated, new ListHaircutController().handle)
 router.put('/updateHaircut', isAuthenticated, new UpdateHaircutController().handle)
 
