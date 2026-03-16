@@ -9,7 +9,7 @@ interface HaircutModel {
 }
 
 class UpdateHaircutService {
-    async execute({ userId, haircutId, name, price, status = true }){
+    async execute({ userId, haircutId, name, price, status = true }: HaircutModel){
         try{
             const user = await prismaClient.user.findFirst({
                 where: {
