@@ -2,13 +2,11 @@ import { Request, Response } from "express";
 import { DetailHaircutService } from "../../services/haircut/DetailHaircutService";
 
 class DetailHaircutController {
-    async handle(req: Request<{ haircutId: string }>, res: Response) {
-        const userId = req.userId;
-        const {haircutId} = req.params;
+    async handle(req: Request, res: Response) {
+        const haircutId = req.query.haircut_id as string;
 
         const haircutDetail = new DetailHaircutService();
-        const detail = await haircutDetail.execute({userId, haircutId});
-
+        const detail = await haircutDetail.execute({ haircutId });
         return res.json(detail)
     }
 }

@@ -1,16 +1,14 @@
 import prismaClient from '../../prisma'
 
 interface DetailHaircut {
-    userId: string;
     haircutId: string;
 }
 
 class DetailHaircutService {
-    async execute({userId, haircutId}: DetailHaircut){
+    async execute({ haircutId }: DetailHaircut){
         const haircutDetail = await prismaClient.haircut.findFirst({
             where: {
-                id: haircutId,
-                userId: userId
+                id: haircutId
             }
         })
 

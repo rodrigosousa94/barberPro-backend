@@ -1,4 +1,4 @@
-import { Router, Response, Request } from 'express';
+import { Router } from 'express';
 import { CreateUserController } from './controllers/user/CreateUserController';
 import { AuthUserController } from './controllers/user/AuthUserController';
 import { DetailUserController } from './controllers/user/DetailUserController';
@@ -10,6 +10,7 @@ import { UpdateHaircutController } from './controllers/haircut/UpdateHaircutCont
 import { CheckSubscriptionController } from './controllers/haircut/CheckSubscriptionController';
 import { CountHaircutsController } from './controllers/haircut/CountHaircutsController';
 import { DetailHaircutController } from './controllers/haircut/DetailHaircutController';
+import { CreateScheduleController } from './controllers/schedule/CreateScheduleController';
 
 const router = Router();
 
@@ -25,6 +26,8 @@ router.get('/haircuts', isAuthenticated, new ListHaircutController().handle)
 router.put('/updateHaircut', isAuthenticated, new UpdateHaircutController().handle)
 router.get('/haircut/checkSubscription', isAuthenticated, new CheckSubscriptionController().handle)
 router.get('/haircut/countHaircuts', isAuthenticated, new CountHaircutsController().handle)
-router.get('/haircut/detailHaircut/:haircutId', isAuthenticated, new DetailHaircutController().handle)
+router.get('/haircut/detailHaircut', isAuthenticated, new DetailHaircutController().handle)
 
+//rotas serviços
+router.post('/schedule', isAuthenticated, new CreateScheduleController().handle)
 export { router };
